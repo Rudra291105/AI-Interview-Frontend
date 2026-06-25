@@ -1,0 +1,427 @@
+
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+:root {
+  --bg-base: #0d1117;
+  --bg-surface: #161b22;
+  --bg-card: #1c2330;
+
+  --border: #2d3748;
+
+  --accent: #3b82f6;
+  --accent-hover: #2563eb;
+  --accent-glow: rgba(59, 130, 246, 0.25);
+
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+
+  --radius: 16px;
+  --radius-sm: 12px;
+
+  --shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Inter", sans-serif;
+}
+
+/* ========================
+   Main Layout
+======================== */
+
+.vi-container {
+  min-height: 100vh;
+  background: var(--bg-base);
+  color: var(--text-primary);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  padding: 40px 20px;
+}
+
+/* ========================
+   Header
+======================== */
+
+.vi-container h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 30px;
+}
+
+.vi-progress {
+  margin-bottom: 20px;
+
+  background: rgba(59, 130, 246, 0.15);
+  border: 1px solid rgba(59, 130, 246, 0.4);
+
+  color: #60a5fa;
+
+  padding: 8px 16px;
+  border-radius: 999px;
+
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+/* ========================
+   Filter Card
+======================== */
+
+.vi-filter-card {
+  width: 100%;
+  max-width: 650px;
+
+  background: var(--bg-surface);
+
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+
+  padding: 30px;
+
+  box-shadow: var(--shadow);
+}
+
+.vi-filter-card h2 {
+  margin-bottom: 20px;
+}
+
+.vi-field {
+  margin-bottom: 18px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.vi-field label {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  font-weight: 600;
+}
+
+.vi-field input,
+.vi-field select {
+  width: 100%;
+
+  background: var(--bg-card);
+
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+
+  color: var(--text-primary);
+
+  padding: 12px 14px;
+
+  outline: none;
+  transition: 0.25s;
+}
+
+.vi-field input:focus,
+.vi-field select:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 4px var(--accent-glow);
+}
+
+/* ========================
+   Question Card
+======================== */
+
+.vi-question-card {
+  width: 100%;
+  max-width: 850px;
+
+  background: linear-gradient(
+    145deg,
+    var(--bg-card),
+    var(--bg-surface)
+  );
+
+  border: 1px solid var(--border);
+  border-left: 5px solid var(--accent);
+
+  border-radius: var(--radius);
+
+  padding: 28px;
+
+  box-shadow: var(--shadow);
+
+  margin-bottom: 24px;
+}
+
+.vi-question-card h3 {
+  color: var(--accent);
+
+  margin-bottom: 12px;
+
+  text-transform: uppercase;
+  letter-spacing: 1px;
+
+  font-size: 0.9rem;
+}
+
+.vi-question-card p {
+  line-height: 1.8;
+  font-size: 1.1rem;
+}
+
+/* ========================
+   Answer Section
+======================== */
+
+.vi-answer-section {
+  width: 100%;
+  max-width: 850px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  margin-bottom: 25px;
+}
+
+.vi-answer-section label {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.vi-textarea {
+  width: 100%;
+  min-height: 220px;
+
+  background: var(--bg-surface);
+
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+
+  color: var(--text-primary);
+
+  padding: 16px;
+
+  resize: vertical;
+
+  outline: none;
+
+  font-size: 1rem;
+  line-height: 1.7;
+
+  transition: 0.25s;
+}
+
+.vi-textarea:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 4px var(--accent-glow);
+}
+
+.vi-char-count {
+  text-align: right;
+  color: var(--text-muted);
+  font-size: 0.8rem;
+}
+
+/* ========================
+   Buttons
+======================== */
+
+.vi-actions {
+  width: 100%;
+  max-width: 850px;
+
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+.vi-btn {
+  border: none;
+
+  min-width: 170px;
+
+  padding: 14px 24px;
+
+  border-radius: 12px;
+
+  cursor: pointer;
+
+  font-size: 0.95rem;
+  font-weight: 600;
+
+  transition: 0.25s;
+}
+
+.vi-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.vi-btn-primary {
+  background: var(--accent);
+  color: white;
+}
+
+.vi-btn-primary:hover:not(:disabled) {
+  background: var(--accent-hover);
+  transform: translateY(-2px);
+}
+
+.vi-btn-secondary {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text-primary);
+}
+
+.vi-btn-secondary:hover:not(:disabled) {
+  background: var(--bg-card);
+}
+
+/* ========================
+   Loading
+======================== */
+
+.vi-loading {
+  min-height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  gap: 15px;
+
+  background: var(--bg-base);
+  color: var(--text-primary);
+}
+
+.vi-spinner {
+  width: 45px;
+  height: 45px;
+
+  border: 4px solid var(--border);
+  border-top-color: var(--accent);
+
+  border-radius: 50%;
+
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ========================
+   Mobile
+======================== */
+
+@media (max-width: 768px) {
+  .vi-container {
+    padding: 25px 15px;
+  }
+
+  .vi-container h1 {
+    font-size: 1.6rem;
+  }
+
+  .vi-question-card {
+    padding: 20px;
+  }
+
+  .vi-actions {
+    flex-direction: column;
+  }
+
+  .vi-btn {
+    width: 100%;
+  }
+}
+
+/* ── Add these rules to your existing virtualinterview.css ── */
+
+/* Timer container */
+.vi-timer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
+  background: #f0f4ff;
+  border: 1.5px solid #c7d4f8;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+/* Warning state: ≤ 30 s left */
+.vi-timer--warning {
+  background: #fff7e6;
+  border-color: #f0a500;
+}
+
+/* Expired state */
+.vi-timer--expired {
+  background: #fff0f0;
+  border-color: #e53e3e;
+}
+
+/* Clock display */
+.vi-timer__display {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: #1a202c;
+  letter-spacing: 0.03em;
+}
+
+.vi-timer--warning .vi-timer__display {
+  color: #c05500;
+}
+
+.vi-timer--expired .vi-timer__display {
+  color: #e53e3e;
+}
+
+/* PAUSED badge */
+.vi-timer__paused-badge {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: #805ad5;
+  background: #f0e6ff;
+  padding: 2px 6px;
+  border-radius: 4px;
+  margin-left: 8px;
+  vertical-align: middle;
+}
+
+/* Button row inside timer */
+.vi-timer__controls {
+  display: flex;
+  gap: 0.5rem;
+}
+
+/* Small button variant */
+.vi-btn-sm {
+  padding: 0.3rem 0.75rem;
+  font-size: 0.82rem;
+}
+
+/* Danger/stop button */
+.vi-btn-danger {
+  background: #fff0f0;
+  color: #c53030;
+  border: 1.5px solid #fc8181;
+}
+
+.vi-btn-danger:hover:not(:disabled) {
+  background: #fed7d7;
+  border-color: #e53e3e;
+}
