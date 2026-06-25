@@ -8,7 +8,7 @@ import ResetPassword    from "./pages/ResetPassword";
 import Dashboard        from "./pages/dashboard";
 import VirtualInterview from "./pages/virtualinterview";
 import ProtectedRoute   from "./component/ProtectedRoute";
-import Admin            from "./pages/Admin";
+import Admin            from "./pages/admin";
 import Practice from "./pages/practice";
 import CompanyPage from "./pages/CompanyPage";
 import PracticeQuestions from "./pages/PracticeQuestions";
