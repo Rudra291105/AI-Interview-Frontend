@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import api from "../utils/api";
@@ -14,12 +13,42 @@ const [evaluations, setEvaluations] = useState({});
 const [progress, setProgress] = useState(null);
 const [loadingQuestion, setLoadingQuestion] = useState(null);
 
-  useEffect(() => {
-    fetchQuestions();
-    fetchProgress();
-  }, [difficulty]);
+  const getCompanyId = (company) => {
+    const companies = {
+      google: 1,
+      amazon: 2,
+      microsoft: 3,
+      adobe: 4,
+      uber: 5,
+      flipkart: 6,
+      oracle: 7,
+      walmart: 8,
+      phonepe: 9,
+      paytm: 10,
+      razorpay: 11,
+      cred: 12,
+      meesho: 13,
+      zomato: 14,
+      swiggy: 15,
+      zoho: 16,
+      tcs: 17,
+      infosys: 18,
+      wipro: 19,
+      hcl: 20,
+      accenture: 21,
+      capgemini: 22,
+      cognizant: 23,
+      techmahindra: 24,
+      devstringxtechnology: 25,
+    };
 
-  const fetchQuestions = async () => { {/*async is basically tell us that this function can take time */}
+    return companies[
+      company?.toLowerCase()?.replace(/\s+/g, "")
+    ];
+  };
+
+  const fetchQuestions = async () => {
+    // async lets us wait for the API response before continuing
     try {
       let url = `/questions?company=${companyName}`;
 
@@ -27,25 +56,33 @@ const [loadingQuestion, setLoadingQuestion] = useState(null);
         url += `&difficulty=${difficulty}`;
       }
 
-      const response = await api.get(url);{/*await can use only with async because next step execute when only respone is retured from backend */}
+      const response = await api.get(url); // await pauses until the backend responds
       setQuestions(response.data);
     } catch (error) {
       console.error("Error fetching questions:", error);
     }
   };
+
   const fetchProgress = async () => {
-  try {
-    const companyId = getCompanyId(companyName);
+    try {
+      const companyId = getCompanyId(companyName);
 
-    const response = await api.get(
-      `/questions/company/${companyId}/progress`
-    );
+      const response = await api.get(
+        `/questions/company/${companyId}/progress`
+      );
 
-    setProgress(response.data);
-  } catch (error) {
-    console.error("Failed to fetch progress:", error);
-  }
-};
+      setProgress(response.data);
+    } catch (error) {
+      console.error("Failed to fetch progress:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchQuestions();
+    fetchProgress();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [difficulty]);
+
   const fetchQuestionsByTopic = async (selectedTopicId) => {
     try {
       if (!selectedTopicId) {
@@ -164,39 +201,6 @@ const [loadingQuestion, setLoadingQuestion] = useState(null);
     setLoadingQuestion(null);
   }
 };
-
-  const getCompanyId = (company) => {
-    const companies = {
-      google: 1,
-      amazon: 2,
-      microsoft: 3,
-      adobe: 4,
-      uber: 5,
-      flipkart: 6,
-      oracle: 7,
-      walmart: 8,
-      phonepe: 9,
-      paytm: 10,
-      razorpay: 11,
-      cred: 12,
-      meesho: 13,
-      zomato: 14,
-      swiggy: 15,
-      zoho: 16,
-      tcs: 17,
-      infosys: 18,
-      wipro: 19,
-      hcl: 20,
-      accenture: 21,
-      capgemini: 22,
-      cognizant: 23,
-      techmahindra: 24,
-    };
-
-    return companies[
-      company?.toLowerCase()?.replace(/\s+/g, "")
-    ];
-  };
 
   return (
     <div className="questions-page">

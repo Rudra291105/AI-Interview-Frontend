@@ -1,5 +1,4 @@
 import { useState } from "react";
-import axios from "axios";
 import { useSearchParams, useNavigate, Link } from "react-router-dom";
 import "./Auth.css";
 import api from "../utils/api";

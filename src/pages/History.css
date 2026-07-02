@@ -1,0 +1,51 @@
+
+.history-page{
+  padding:40px;
+  background:#f5f7fb;
+  min-height:100vh;
+}
+.history-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:20px;
+}
+.history-search{
+  width:100%;
+  padding:12px;
+  border-radius:8px;
+  border:1px solid #ccc;
+  margin-bottom:25px;
+}
+.history-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+  gap:20px;
+}
+.history-card{
+  background:#fff;
+  border-radius:12px;
+  padding:20px;
+  box-shadow:0 4px 12px rgba(0,0,0,.08);
+}
+.history-card h2{
+  margin-top:0;
+}
+.feedback{
+  color:#555;
+  min-height:60px;
+}
+.report-btn,.back-btn{
+  background:#4f46e5;
+  color:#fff;
+  border:none;
+  padding:10px 16px;
+  border-radius:8px;
+  cursor:pointer;
+}
+.empty-card,.history-loading{
+  text-align:center;
+  padding:60px;
+  background:#fff;
+  border-radius:12px;
+}

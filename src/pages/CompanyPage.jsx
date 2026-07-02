@@ -1,16 +1,9 @@
-import { useParams } from "react-router-dom";
-import { useState } from "react";
-import axios from "axios";
+import { useParams, useNavigate } from "react-router-dom";
 import "./CompanyPage.css";
-import { useNavigate } from "react-router-dom";
-
-
 
 function CompanyPage() {
   const { companyName } = useParams();
-    const [questions, setQuestions] = useState([]);
-    const navigate = useNavigate();
-  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
   const companies = {
   google: {
     name: "Google",
@@ -326,6 +319,17 @@ function CompanyPage() {
       "HR Interview"
     ],
     topics: ["DSA Basics", "OOPs", "DBMS", "Aptitude", "Communication"]
+  },
+  devstringxtechnology:{
+    name :"Devstringx technology",
+    salary: "₹4-8 LPA",
+    locations: ["Pan India"],
+    rounds: [
+      "Online Assessment (Aptitude + Coding)",
+      "Technical Interview",
+      "HR Interview"
+    ],
+    topics: ["DSA Basics", "OOPs", "DBMS", "Aptitude", "Communication"]
   }
 
   };
@@ -335,22 +339,7 @@ function CompanyPage() {
   if (!company) {
     return <h1>Company Not Found</h1>;
   }
-   const startPractice = async () => {
-    try {
-      setLoading(true);
 
-      const response = await axios.get(
-        `http://127.0.0.1:8000/questions?company=${company.name}`
-      );
-
-      setQuestions(response.data);
-    } catch (error) {
-      console.error(error);
-      alert("Failed to load questions");
-    } finally {
-      setLoading(false);
-    }
-  };
   return (
     <div className="company-page">
 
@@ -408,28 +397,6 @@ function CompanyPage() {
     </button>
   ))}
 </div>
-
-{loading && (
-  <div className="loading-box">
-    Loading Questions...
-  </div>
-)}
-
-{questions.length > 0 && (
-  <div className="questions-section">
-    <h2>Interview Questions</h2>
-
-    {questions.map((q) => (
-      <div
-        key={q.id}
-        className="question-card"
-      >
-        <h3>{q.question_text}</h3>
-      </div>
-    ))}
-  </div>
-)}
-      
 
     </div>
   );

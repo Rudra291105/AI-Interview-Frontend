@@ -5,7 +5,9 @@ function Practice() {
   const navigate = useNavigate();
 
   const startPractice = (company) => {
-    navigate(`/practice/${company.toLowerCase()}`);
+    // Strip spaces so multi-word company names (e.g. "Tech Mahindra")
+    // match the slug keys used in CompanyPage / PracticeQuestions.
+    navigate(`/practice/${company.toLowerCase().replace(/\s+/g, "")}`);
   };
 
   const companySections = [
@@ -47,7 +49,8 @@ function Practice() {
         { name: "Accenture", salary: "₹4-10 LPA", questions: 80, time: "4 Hours" },
         { name: "Capgemini", salary: "₹4-9 LPA", questions: 75, time: "3 Hours" },
         { name: "Cognizant", salary: "₹4-8 LPA", questions: 70, time: "3 Hours" },
-        { name: "Tech Mahindra", salary: "₹4-8 LPA", questions: 65, time: "3 Hours" }
+        { name: "Tech Mahindra", salary: "₹4-8 LPA", questions: 65, time: "3 Hours" },
+        {name: "Devstringx technology",salary :"₹4-8 LPA", questions: 65, time: "3 Hours"}
       ]
     }
   ];

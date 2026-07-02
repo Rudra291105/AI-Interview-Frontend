@@ -1,14 +1,21 @@
-import React, { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import { GoogleLogin } from "@react-oauth/google";
+import api, { saveTokens } from "../utils/api";
 import "./LandingPage.css";
 
-/* ─── Data ──────────────────────────────────────────────────────────────────── */
+/* ─── Data ───*/
 const FEATURES = [
   {
     icon: "🤖",
     title: "AI Mock Interviews",
     desc: "Have a full mock interview with an AI that adapts its questions based on your answers, just like a real interviewer.",
   },
+  {
+  icon: "🏢",
+  title: "Company-Wise Practice",
+  desc: "Practice interview questions tailored to your target company, covering its hiring patterns, technical rounds, and behavioral interviews."
+},
   {
     icon: "🎤",
     title: "Voice Interaction",
@@ -103,17 +110,39 @@ const FAQS = [
 ];
 
 const SOCIAL_BTNS = [
-  { src: "https://cdn-icons-png.flaticon.com/512/300/300221.png", label: "Google" },
   { src: "https://cdn-icons-png.flaticon.com/512/174/174857.png", label: "LinkedIn" },
   { src: "https://cdn-icons-png.flaticon.com/512/25/25231.png", label: "GitHub" },
 ];
 
 const COMPANIES = [
-  "DevStringx","Google", "Amazon", "Microsoft", "Flipkart","DevStringx", "Infosys",
-  "TCS", "Wipro", "Zomato", "Swiggy", "DevStringx","Razorpay", "CRED", "PhonePe",
+      "google",
+      "amazon",
+      "microsoft",
+      "adobe",
+      "uber",
+      "flipkart",
+      "oracle",
+      "walmart",
+      "phonepe",
+      "paytm",
+      "razorpay",
+      "cred",
+      "meesho",
+      "zomato",
+      "swiggy",
+      "zoho",
+      "tcs",
+      "infosys",
+      "wipro",
+      "hcl",
+      "accenture",
+      "capgemini",
+      "cognizant",
+      "techmahindra",
+      "DevStringx"
 ];
 
-/* ─── Sub-components ────────────────────────────────────────────────────────── */
+/* ─── Sub-components ─── */
 
 /** Counts up from 0 to `end` when scrolled into view */
 function AnimatedCounter({ end, suffix = "" }) {
@@ -162,6 +191,25 @@ function FAQItem({ q, a }) {
 export default function LandingPage() {
   const navigate = useNavigate();
 
+  const handleGoogleSuccess = async (credentialResponse) => {
+    try {
+      const res = await api.post("/google-login", {
+        token: credentialResponse.credential,
+      });
+      const { access_token, refresh_token, role } = res.data;
+      saveTokens(access_token, refresh_token);
+      localStorage.setItem("role", role);
+      navigate(role === "admin" ? "/admin" : "/dashboard");
+    } catch (err) {
+      console.error(err);
+      alert(err.response?.data?.detail || "Google sign-in failed. Please try again.");
+    }
+  };
+
+  const handleGoogleError = () => {
+    alert("Google sign-in was cancelled or failed. Please try again.");
+  };
+
   return (
     <div className="lp-root">
 
@@ -169,7 +217,7 @@ export default function LandingPage() {
       <nav className="navbar">
         <a className="nav-logo" href="/">
           <div className="nav-logo-mark">AI</div>
-          InterviewAI
+          CrackIt.AI
         </a>
 
         <ul className="nav-links">
@@ -204,7 +252,7 @@ export default function LandingPage() {
 
           {/* Left — headline + stats */}
           <div className="hero-left">
-            <div className="eyebrow">⚡ Powered by DevStringx</div>
+            <div className="eyebrow">⚡ Built for Career Growth</div>
 
             <h1 className="hero-headline">
               Ace every interview<br /> 
@@ -260,8 +308,22 @@ export default function LandingPage() {
               <span className="card-divider-line" />
             </div>
 
+            <div className="social-btn google-btn-wrap">
+              <GoogleLogin
+                onSuccess={handleGoogleSuccess}
+                onError={handleGoogleError}
+                text="continue_with"
+                width="280"
+              />
+            </div>
+
             {SOCIAL_BTNS.map(({ src, label }) => (
-              <button key={label} className="social-btn">
+              <button
+                key={label}
+                className="social-btn"
+                disabled
+                title={`${label} sign-in coming soon`}
+              >
                 <img src={src} alt={label} className="social-icon" />
                 Continue with {label}
               </button>
@@ -388,7 +450,7 @@ export default function LandingPage() {
       <footer className="footer">
         <div className="footer-logo">
           <div className="nav-logo-mark">AI</div>
-          <span className="footer-logo-name">InterviewAI</span>
+          <span className="footer-logo-name">CrackIt.AI</span>
         </div>
         <div className="footer-links">
           {["Privacy", "Terms", "Contact"].map((l) => (

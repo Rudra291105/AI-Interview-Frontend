@@ -23,17 +23,6 @@ function Admin() {
   const [difficultyId, setDifficultyId] = useState("");
   const [questionTypeId, setQuestionTypeId] = useState("");
 
-  useEffect(() => {
-    setStats({
-      totalUsers: 125,
-      totalInterviews: 340,
-      totalQuestions: 1500,
-      averageScore: 78,
-    });
-
-    fetchQuestions();
-  }, []);
-
   const fetchQuestions = async () => {
     try {
       const token = localStorage.getItem("access_token");
@@ -50,6 +39,17 @@ function Admin() {
       console.error(error);
     }
   };
+
+  useEffect(() => {
+    setStats({
+      totalUsers: 125,
+      totalInterviews: 340,
+      totalQuestions: 1500,
+      averageScore: 78,
+    });
+
+    fetchQuestions();
+  }, []);
 
   const handleAddQuestion = async () => {
     try {

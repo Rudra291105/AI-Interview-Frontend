@@ -18,6 +18,11 @@ function Dashboard() {
   const [loadingData, setLoadingData] = useState(true);
   const [activeTab, setActiveTab]     = useState("overview");
 
+  // ── Edit profile state ──
+  const [isEditing, setIsEditing]     = useState(false);
+  const [editForm, setEditForm]       = useState({});
+  const [saving, setSaving]           = useState(false);
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -31,7 +36,11 @@ function Dashboard() {
   }, []);
 
   const handleLogout = async () => {
-    try { await api.post("/logout"); } catch (_) {}
+    try {
+      await api.post("/logout");
+    } catch (err) {
+      console.error("Logout request failed:", err);
+    }
     clearTokens();
     navigate("/login");
   };
@@ -46,6 +55,44 @@ function Dashboard() {
     } catch (err) {
       console.error(err);
       alert("Resume Upload Failed");
+    }
+  };
+
+  // ── Edit profile handlers ──
+  const startEditing = () => {
+    setEditForm({
+      name: profile.name || "",
+      email: profile.email || "",
+      college: profile.college || "",
+      branch: profile.branch || "",
+      graduation_year: profile.graduation_year || "",
+      primary_skill: profile.primary_skill || "",
+      target_company: profile.target_company || "",
+      target_role: profile.target_role || "",
+    });
+    setIsEditing(true);
+  };
+
+  const cancelEditing = () => {
+    setIsEditing(false);
+    setEditForm({});
+  };
+
+  const handleFieldChange = (field, value) => {
+    setEditForm((prev) => ({ ...prev, [field]: value }));
+  };
+
+  const saveProfile = async () => {
+    setSaving(true);
+    try {
+      const res = await api.put("/profile", editForm);
+      setProfile(res.data.profile || res.data);
+      setIsEditing(false);
+    } catch (err) {
+      console.error("Profile update failed:", err);
+      alert("Failed to update profile. Please try again.");
+    } finally {
+      setSaving(false);
     }
   };
 
@@ -65,6 +112,17 @@ function Dashboard() {
     { icon: "❓", label: "Total Questions",  value: stats.total_questions,  color: "green" },
   ];
 
+  const profileFields = [
+    ["Name", "name"],
+    ["Email", "email"],
+    ["College", "college"],
+    ["Branch", "branch"],
+    ["Graduation Year", "graduation_year"],
+    ["Primary Skill", "primary_skill"],
+    ["Target Company", "target_company"],
+    ["Target Role", "target_role"],
+  ];
+
   return (
     <div className="db-root">
 
@@ -72,20 +130,22 @@ function Dashboard() {
       <aside className="db-sidebar">
         <div className="db-sidebar-logo">
           <div className="db-logo-mark">AI</div>
-          <span className="db-logo-name">InterviewAI</span>
+          <span className="db-logo-name">CrackIt.AI</span>
         </div>
 
         <nav className="db-sidebar-nav">
           {[
-            { id: "overview",  icon: "🏠", label: "Overview"  },
-            { id: "history",   icon: "📋", label: "History"   },
-            { id: "progress",  icon: "📈", label: "Progress"  },
+            { id: "overview",  icon: "🏠", label: "Overview",path: "/dashboard",  },
+            { id: "history",   icon: "📋", label: "History" ,path: "/history",  },
+            { id: "progress",  icon: "📈", label: "Progress",path: "/progress",  },
           ].map((item) => (
             <button
               key={item.id}
               className={`db-nav-item ${activeTab === item.id ? "db-nav-item--active" : ""}`}
-              onClick={() => setActiveTab(item.id)}
-            >
+              onClick={() => {
+    setActiveTab(item.id);
+    navigate(item.path);
+}}>
               <span className="db-nav-icon">{item.icon}</span>
               {item.label}
             </button>
@@ -100,16 +160,7 @@ function Dashboard() {
   </button>
         </nav>
 
-        <div className="db-sidebar-bottom">
-          <button className="db-nav-item" onClick={() => setShowProfile(true)}>
-            <span className="db-nav-icon">👤</span>
-            Profile
-          </button>
-          <button className="db-nav-item db-nav-logout" onClick={handleLogout}>
-            <span className="db-nav-icon">🚪</span>
-            Logout
-          </button>
-        </div>
+        
       </aside>
 
       {/* ── MAIN CONTENT ── */}
@@ -117,14 +168,40 @@ function Dashboard() {
 
         {/* Top bar */}
         <header className="db-topbar">
-          <div>
-            <h1 className="db-welcome">Hey {profile.name || "there"} 👋</h1>
-            <p className="db-welcome-sub">Ready to practice today?</p>
-          </div>
-          <button className="db-start-btn" onClick={() => setShowOptions(true)}>
-            + Start Interview
-          </button>
-        </header>
+  <div>
+    <h1 className="db-welcome">Hey {profile.name || "there"} 👋</h1>
+    <p className="db-welcome-sub">
+      Ready to practice today?
+    </p>
+  </div>
+
+  <div className="db-topbar-right">
+
+    <button
+      className="db-start-btn"
+      onClick={() => setShowOptions(true)}
+    >
+      + Start Interview
+    </button>
+
+    <div
+      className="db-profile-btn"
+      onClick={() => setShowProfile(true)}
+    >
+      <div className="db-profile-avatar">
+        {profile.name?.charAt(0).toUpperCase()}
+      </div>
+
+      <div className="db-profile-info">
+        <span className="db-profile-name">
+          {profile.name}
+        </span>
+
+      </div>
+    </div>
+
+  </div>
+</header>
 
         {/* Stat cards */}
         <div className="db-stats-grid">
@@ -233,27 +310,39 @@ function Dashboard() {
 
       {/* ── PROFILE MODAL ── */}
       {showProfile && (
-        <div className="db-modal-overlay" onClick={() => setShowProfile(false)}>
+        <div
+          className="db-modal-overlay"
+          onClick={() => { setShowProfile(false); setIsEditing(false); }}
+        >
           <div className="db-modal db-modal--wide" onClick={(e) => e.stopPropagation()}>
             <h2 className="db-modal-title">👤 Your Profile</h2>
 
-            <div className="db-profile-grid">
-              {[
-                ["Name", profile.name],
-                ["Email", profile.email],
-                ["College",profile.college],
-                ["Branch", profile.branch],
-                ["Graduation Year",profile.graduation_year],
-                ["Primary Skill", profile.primary_skill],
-                ["Target Company",profile.target_company],
-                ["Target Role",   profile.target_role],
-              ].map(([label, value]) => (
-                <div className="db-profile-field" key={label}>
-                  <span className="db-profile-label">{label}</span>
-                  <span className="db-profile-value">{value || "Not added yet"}</span>
-                </div>
-              ))}
-            </div>
+            {!isEditing ? (
+              <div className="db-profile-grid">
+                {profileFields.map(([label, key]) => (
+                  <div className="db-profile-field" key={key}>
+                    <span className="db-profile-label">{label}</span>
+                    <span className="db-profile-value">{profile[key] || "Not added yet"}</span>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div className="db-profile-grid db-profile-grid--edit">
+                {profileFields.map(([label, key]) => (
+                  <div className="db-profile-field db-profile-field--edit" key={key}>
+                    <label className="db-profile-label" htmlFor={`field-${key}`}>{label}</label>
+                    <input
+                      id={`field-${key}`}
+                      className="db-profile-input"
+                      type="text"
+                      value={editForm[key] ?? ""}
+                      onChange={(e) => handleFieldChange(key, e.target.value)}
+                      disabled={saving}
+                    />
+                  </div>
+                ))}
+              </div>
+            )}
 
             <div className="db-resume-section">
               <h3 className="db-resume-title">📎 Resume</h3>
@@ -271,14 +360,35 @@ function Dashboard() {
             </div>
 
             <div className="db-profile-actions">
-              <button className="db-btn-outline" onClick={() => alert("Edit Profile Coming Soon")}>
-                ✏️ Edit Profile
-              </button>
-              <button className="db-btn-danger" onClick={handleLogout}>
-                🚪 Logout
-              </button>
+              {!isEditing ? (
+                <>
+                  <button className="db-btn-outline" onClick={startEditing}>
+                    ✏️ Edit Profile
+                  </button>
+                  <button className="db-btn-danger" onClick={handleLogout}>
+                    🚪 Logout
+                  </button>
+                </>
+              ) : (
+                <>
+                  <button
+                    className="db-btn-outline"
+                    onClick={cancelEditing}
+                    disabled={saving}
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    className="db-btn-primary"
+                    onClick={saveProfile}
+                    disabled={saving}
+                  >
+                    {saving ? "Saving…" : "💾 Save Changes"}
+                  </button>
+                </>
+              )}
             </div>
-            <button className="db-modal-close" onClick={() => setShowProfile(false)}>
+            <button className="db-modal-close" onClick={() => { setShowProfile(false); setIsEditing(false); }}>
               Close
             </button>
           </div>

@@ -1,8 +1,8 @@
 import { useState } from "react";
-import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
+import { GoogleLogin } from "@react-oauth/google";
 import "./Auth.css";
-import api from "../utils/api";
+import api, { saveTokens } from "../utils/api";
 function Signup() {
   const [form, setForm] = useState({
     name: "",
@@ -46,6 +46,25 @@ function Signup() {
     }
   };
 
+  const handleGoogleSuccess = async (credentialResponse) => {
+    try {
+      const res = await api.post("/google-login", {
+        token: credentialResponse.credential,
+      });
+      const { access_token, refresh_token, role } = res.data;
+      saveTokens(access_token, refresh_token);
+      localStorage.setItem("role", role);
+      navigate(role === "admin" ? "/admin" : "/dashboard");
+    } catch (err) {
+      console.error(err);
+      alert(err.response?.data?.detail || "Google sign-up failed. Please try again.");
+    }
+  };
+
+  const handleGoogleError = () => {
+    alert("Google sign-in was cancelled or failed. Please try again.");
+  };
+
   return (
     <div className="auth-container">
       <div className="auth-card">
@@ -53,6 +72,21 @@ function Signup() {
         <div className="logo">AI Interview Platform</div>
 
         <p className="subtitle">Create your account</p>
+
+        <div className="google-btn-wrap" style={{ display: "flex", justifyContent: "center", marginBottom: "1rem" }}>
+          <GoogleLogin
+            onSuccess={handleGoogleSuccess}
+            onError={handleGoogleError}
+            text="signup_with"
+            width="280"
+          />
+        </div>
+
+        <div className="card-divider">
+          <span className="card-divider-line" />
+          <span className="card-divider-text">or sign up with email</span>
+          <span className="card-divider-line" />
+        </div>
 
         <form onSubmit={handleSubmit}>
 

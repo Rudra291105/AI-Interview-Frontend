@@ -17,7 +17,7 @@ export const clearTokens = () => {
   localStorage.removeItem("user_name");
 };
 
-// ── Axios instance ────────────────────────────────────────────────
+// ── Axios instance ──
 const api = axios.create({ baseURL: BASE_URL });
 
 // Attach access token to every request

@@ -4,7 +4,12 @@
   box-sizing: border-box;
 }
 
-body {
+/* Main Container */
+.auth-container {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background: linear-gradient(
     135deg,
     #111827,
@@ -12,14 +17,6 @@ body {
     #374151
   );
   font-family: Arial, sans-serif;
-}
-
-/* Main Container */
-.auth-container {
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 /* Card */
@@ -129,4 +126,24 @@ button:hover {
     font-size: 24px;
   }
 
+}
+
+/* Divider used above/below the Google sign-in button */
+.card-divider {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 14px 0;
+}
+
+.card-divider-line {
+  flex: 1;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.card-divider-text {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 13px;
+  white-space: nowrap;
 }

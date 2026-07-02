@@ -1,7 +1,10 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import api from "../utils/api";
 import "./admin_portal.css";
 
 function AdminRequest() {
+  const navigate = useNavigate();
   const [form, setForm] = useState({
     role: "",
     hiringVolume: "",
