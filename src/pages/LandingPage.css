@@ -1,24 +1,25 @@
 .lp-root {
-  --bg:           #0A0F1E;/*bg color*/
-  --surface:      #111827;/*bg color*/
-  --card:         #161F35;/*box color like login why*/
-  --border:       #1E2D4A;/*border color every box e*/
-  --accent:       #4F8EF7;
-  --accent-glow:  #3B6FD4;
-  --accent-soft:  rgba(79, 142, 247, 0.12);
-  --cyan:         #22D3EE;
-  --purple:       #A78BFA;
-  --text:         #F0F4FF;
-  --muted:        #8A97B0;
+  --bg:           #EAEDF7;/*bg color - soft periwinkle mist, not white*/
+  --surface:      #E1E5F3;/*bg color - alt section, slightly deeper tint*/
+  --card:         #FFFFFF;/*box color like login why - crisp card lift off the tinted bg*/
+  --border:       #DBDFF0;/*border color every box e*/
+  --accent:       #5B5BD6;
+  --accent-glow:  #4645B0;
+  --accent-soft:  rgba(91, 91, 214, 0.10);
+  --cyan:         #0EA5B7;
+  --purple:       #9B6BD6;
+  --text:         #2A2E4A;
+  --muted:        #6B7290;
   --white:        #ffffff;
+  --ink:          #14172E;
 
   --radius-sm:    8px;
   --radius-md:    12px;
   --radius-lg:    20px;
   --radius-xl:    24px;
 
-  --shadow-card:  0 24px 80px rgba(0, 0, 0, 0.5);
-  --shadow-glow:  0 0 30px rgba(79, 142, 247, 0.4);
+  --shadow-card:  0 20px 50px rgba(43, 52, 97, 0.14);
+  --shadow-glow:  0 10px 26px rgba(91, 91, 214, 0.35);
 }
 
 /* ── Reset & base ─────────────────────────────────────────── */
@@ -54,7 +55,7 @@
 
 .btn-primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 0 44px rgba(79, 142, 247, 0.55);
+  box-shadow: 0 0 44px rgba(91, 91, 214, 0.45);
 }
 
 .btn-secondary {
@@ -120,7 +121,7 @@
   font-size: clamp(28px, 4vw, 44px);
   font-weight: 800;
   letter-spacing: -0.02em;
-  color: var(--white);
+  color: var(--ink);
   margin-bottom: 16px;
 }
 
@@ -139,7 +140,7 @@
   position: sticky;
   top: 0;
   z-index: 100;
-  background: rgba(10, 15, 30, 0.85);
+  background: rgba(234, 237, 247, 0.85);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
   border-bottom: 1px solid var(--border);
@@ -158,7 +159,7 @@
   gap: 10px;
   font-weight: 700;
   font-size: 18px;
-  color: var(--white);
+  color: var(--ink);
   text-decoration: none;
 }
 
@@ -200,7 +201,7 @@
 .nav-cta {
   padding: 9px 22px;
   font-size: 14px;
-  box-shadow: 0 0 20px rgba(79, 142, 247, 0.35);
+  box-shadow: 0 0 20px rgba(91, 91, 214, 0.28);
   flex-shrink: 0;
   white-space: nowrap;
 }
@@ -260,7 +261,7 @@
   height: 440px;
   top: 15%;
   left: 8%;
-  background: radial-gradient(circle, rgba(79, 142, 247, 0.12) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(91, 91, 214, 0.14) 0%, transparent 70%);
 }
 
 .blob-purple {
@@ -268,7 +269,7 @@
   height: 360px;
   bottom: 10%;
   right: 6%;
-  background: radial-gradient(circle, rgba(167, 139, 250, 0.10) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(155, 107, 214, 0.14) 0%, transparent 70%);
 }
 
 .blob-cta {
@@ -276,7 +277,7 @@
   left: 15%;
   width: 300px;
   height: 300px;
-  background: radial-gradient(circle, rgba(79, 142, 247, 0.08) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(91, 91, 214, 0.10) 0%, transparent 70%);
 }
 
 .hero-grid {
@@ -311,7 +312,7 @@
   font-weight: 800;
   line-height: 1.1;
   letter-spacing: -0.025em;
-  color: var(--white);
+  color: var(--ink);
   margin-bottom: 20px;
 }
 
@@ -343,7 +344,7 @@
 .hero-stat-num {
   font-size: 28px;
   font-weight: 800;
-  color: var(--white);
+  color: var(--ink);
   line-height: 1;
 }
 
@@ -370,7 +371,7 @@
 .login-title {
   font-size: 22px;
   font-weight: 700;
-  color: var(--white);
+  color: var(--ink);
   margin-bottom: 6px;
 }
 
@@ -464,7 +465,7 @@
 .feature-card:hover {
   transform: translateY(-4px);
   border-color: var(--accent-glow);
-  box-shadow: 0 12px 40px rgba(79, 142, 247, 0.15);
+  box-shadow: 0 12px 40px rgba(91, 91, 214, 0.14);
 }
 
 .feature-icon {
@@ -475,7 +476,7 @@
 .feature-title {
   font-size: 17px;
   font-weight: 700;
-  color: var(--white);
+  color: var(--ink);
   margin-bottom: 10px;
 }
 
@@ -522,7 +523,7 @@
 .step-title {
   font-size: 17px;
   font-weight: 700;
-  color: var(--white);
+  color: var(--ink);
   margin-bottom: 8px;
 }
 
@@ -590,7 +591,7 @@
 .author-name {
   font-size: 14px;
   font-weight: 600;
-  color: var(--white);
+  color: var(--ink);
   margin-bottom: 2px;
 }
 
@@ -619,7 +620,7 @@
   cursor: pointer;
   font-size: 15px;
   font-weight: 600;
-  color: var(--white);
+  color: var(--ink);
   user-select: none;
   gap: 16px;
 }
@@ -644,7 +645,7 @@
 .cta-banner {
   position: relative;
   margin: 0 5% 100px;
-  background: linear-gradient(135deg, #0d1b3e, #111827);
+  background: linear-gradient(135deg, #E4E7F8, #EDEFF7);
   border: 1px solid var(--border);
   border-radius: var(--radius-xl);
   padding: 72px 60px;

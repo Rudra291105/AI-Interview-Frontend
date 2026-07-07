@@ -2,22 +2,28 @@
 
 /* ─── Design Tokens ─────────────────────────────────────────────── */
 .vi2-page {
-  --vi-bg:          #0d1117;
-  --vi-surface:     #161b22;
-  --vi-card:        #1c2330;
-  --vi-border:      #2d3748;
+  --vi-bg:          #EAEDF7;
+  --vi-surface:     #ffffff;
+  --vi-card:        #F2F4FA;
+  --vi-border:      #DCE1F0;
+  --vi-scroll:      #C6CCE2;
   --vi-accent:      #3b82f6;
   --vi-accent-h:    #2563eb;
-  --vi-accent-glow: rgba(59,130,246,0.2);
-  --vi-text:        #f0f6fc;
-  --vi-text-2:      #94a3b8;
-  --vi-text-3:      #64748b;
+  --vi-accent-glow: rgba(59,130,246,0.16);
+  --vi-text:        #171B2E;
+  --vi-text-2:      #5B6478;
+  --vi-text-3:      #8A93AA;
   --vi-green:       #22c55e;
+  --vi-green-text:  #178A4B;
   --vi-orange:      #f59e0b;
+  --vi-orange-text: #B4790F;
   --vi-red:         #ef4444;
+  --vi-red-text:    #D6362B;
+  --vi-purple-text: #7C4FE0;
+  --vi-blue-text:   #2563eb;
   --vi-radius:      16px;
   --vi-radius-sm:   10px;
-  --vi-shadow:      0 8px 32px rgba(0,0,0,0.4);
+  --vi-shadow:      0 12px 36px rgba(43,52,97,0.12);
 }
 
 *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
@@ -113,7 +119,7 @@
   color: var(--vi-text-2);
 }
 
-.vi2-required { color: var(--vi-red); }
+.vi2-required { color: var(--vi-red-text); }
 .vi2-optional { color: var(--vi-text-3); font-weight: 400; }
 
 .vi2-field select,
@@ -189,14 +195,14 @@
 }
 
 .vi2-topbar-company {
-  background: rgba(167,139,250,0.15);
-  color: #a78bfa;
-  border: 1px solid rgba(167,139,250,0.3);
+  background: rgba(124,79,224,0.10);
+  color: var(--vi-purple-text);
+  border: 1px solid rgba(124,79,224,0.25);
 }
 
 .vi2-topbar-role {
   background: var(--vi-accent-glow);
-  color: #60a5fa;
+  color: var(--vi-blue-text);
   border: 1px solid rgba(59,130,246,0.3);
 }
 
@@ -244,7 +250,7 @@
 
 .vi2-chat-window::-webkit-scrollbar { width: 6px; }
 .vi2-chat-window::-webkit-scrollbar-track { background: transparent; }
-.vi2-chat-window::-webkit-scrollbar-thumb { background: var(--vi-border); border-radius: 3px; }
+.vi2-chat-window::-webkit-scrollbar-thumb { background: var(--vi-scroll); border-radius: 3px; }
 
 /* ─── Chat Messages ─────────────────────────────────────────────── */
 .vi2-msg {
@@ -317,9 +323,9 @@
 
 /* System message */
 .vi2-bubble-system {
-  background: rgba(167,139,250,0.1);
-  border-color: rgba(167,139,250,0.3);
-  color: #c4b5fd;
+  background: rgba(124,79,224,0.08);
+  border-color: rgba(124,79,224,0.25);
+  color: var(--vi-purple-text);
   font-style: italic;
 }
 
@@ -351,12 +357,12 @@
 
 .vi2-fb-green {
   background: rgba(34,197,94,0.1);
-  color: var(--vi-green);
+  color: var(--vi-green-text);
 }
 
 .vi2-fb-orange {
   background: rgba(245,158,11,0.1);
-  color: var(--vi-orange);
+  color: var(--vi-orange-text);
 }
 
 /* Tags on question bubbles */
@@ -376,12 +382,12 @@
 
 .vi2-tag-type {
   background: rgba(59,130,246,0.15);
-  color: #60a5fa;
+  color: var(--vi-blue-text);
 }
 
 .vi2-tag-followup {
   background: rgba(245,158,11,0.15);
-  color: var(--vi-orange);
+  color: var(--vi-orange-text);
 }
 
 /* Thinking animation */
@@ -570,8 +576,8 @@
   margin-bottom: 14px;
 }
 
-.vi2-section-green h3 { color: var(--vi-green); }
-.vi2-section-red h3   { color: var(--vi-red); }
+.vi2-section-green h3 { color: var(--vi-green-text); }
+.vi2-section-red h3   { color: var(--vi-red-text); }
 
 .vi2-report-section ul {
   list-style: none;
@@ -643,7 +649,7 @@
   padding: 6px 14px;
   border-radius: 999px;
   background: var(--vi-accent-glow);
-  color: #60a5fa;
+  color: var(--vi-blue-text);
   border: 1px solid rgba(59,130,246,0.3);
   font-weight: 500;
 }
@@ -710,7 +716,7 @@
 .vi2-btn-end {
   background: rgba(239,68,68,0.1);
   border: 1px solid rgba(239,68,68,0.35);
-  color: #f87171;
+  color: var(--vi-red-text);
   padding: 7px 14px;
   font-size: 0.83rem;
 }

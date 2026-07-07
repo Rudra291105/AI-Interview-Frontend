@@ -1,7 +1,8 @@
-
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../utils/api";
+import Sidebar from "./Sidebar";
+import "./Layout.css";
 import "./History.css";
 
 export default function History() {
@@ -44,59 +45,57 @@ export default function History() {
     return new Date(d).toLocaleString();
   };
 
-  if (loading) {
-    return (
-      <div className="history-page">
-        <div className="history-loading">Loading interview history...</div>
-      </div>
-    );
-  }
-
   return (
-    <div className="history-page">
-      <div className="history-header">
-        <h1>Interview History</h1>
-        <button className="back-btn" onClick={() => navigate("/dashboard")}>
-          ← Dashboard
-        </button>
-      </div>
-
-      <input
-        className="history-search"
-        placeholder="Search by company or role..."
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
-      />
-
-      {filtered.length === 0 ? (
-        <div className="empty-card">
-          <h2>No Interviews Found</h2>
-          <p>Complete a virtual interview to see your history.</p>
-        </div>
-      ) : (
-        <div className="history-grid">
-          {filtered.map((item) => (
-            <div className="history-card" key={item.interview_id}>
-              <h2>{item.company || "General Interview"}</h2>
-              <p><strong>Role:</strong> {item.role}</p>
-              <p><strong>Score:</strong> {item.score}%</p>
-              <p><strong>Questions:</strong> {item.questions_count}</p>
-              <p><strong>Duration:</strong> {formatDuration(item.duration)}</p>
-              <p><strong>Date:</strong> {formatDate(item.completed_at || item.created_at)}</p>
-              <p className="feedback">{item.feedback}</p>
-
-              <button
-                className="report-btn"
-                onClick={() =>
-                  navigate(`/history/${item.interview_id}`)
-                }
-              >
-                View Report
-              </button>
+    <div className="app-layout">
+      <Sidebar />
+      <div className="app-content history-page">
+        {loading ? (
+          <div className="history-loading">Loading interview history...</div>
+        ) : (
+          <>
+            <div className="history-header">
+              <h1>Interview History</h1>
             </div>
-          ))}
-        </div>
-      )}
+
+            <input
+              className="history-search"
+              placeholder="Search by company or role..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
+
+            {filtered.length === 0 ? (
+              <div className="empty-card">
+                <h2>No Interviews Found</h2>
+                <p>Complete a virtual interview to see your history.</p>
+              </div>
+            ) : (
+              <div className="history-grid">
+                {filtered.map((item) => (
+                  <div className="history-card" key={item.interview_id}>
+                    <h2>{item.company || "General Interview"}</h2>
+                    <p><strong>Role:</strong> {item.role}</p>
+                    <p><strong>Score:</strong> {item.score}%</p>
+                    <p><strong>Questions:</strong> {item.questions_count}</p>
+                    <p><strong>Duration:</strong> {formatDuration(item.duration)}</p>
+                    <p><strong>Date:</strong> {formatDate(item.completed_at || item.created_at)}</p>
+                    <p className="feedback">{item.feedback}</p>
+
+                    <button
+                      className="report-btn"
+                      onClick={() =>
+                        navigate(`/history/${item.interview_id}`)
+                      }
+                    >
+                      View Report
+                    </button>
+                  </div>
+                ))}
+              </div>
+            )}
+          </>
+        )}
+      </div>
     </div>
   );
 }

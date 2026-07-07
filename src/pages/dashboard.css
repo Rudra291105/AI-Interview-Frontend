@@ -1,6 +1,6 @@
 /* ============================================================
    CrackIt.AI — Dashboard
-   Palette:   #14162B navy (sidebar) · #F6F7FB canvas
+   Palette:   #EDEFFB tinted panel (sidebar) · #F6F7FB canvas
               #5B5FEF indigo (primary) · #FF7A59 coral (CTA)
               #22C55E mint (success)  · #6D7280 muted text
    Type:      "Space Grotesk" display · "Inter" body/data
@@ -26,6 +26,10 @@
   --cyan-soft: #e5f8fa;
   --amber: #f5a524;
   --amber-soft: #fef3e0;
+
+  --sidebar: #edeffb;
+  --hero-start: #e9ebfe;
+  --hero-end: #eaf8fb;
 
   --radius-lg: 20px;
   --radius-md: 14px;
@@ -93,7 +97,8 @@ button {
 /* ============================== SIDEBAR ============================== */
 
 .db-sidebar {
-  background: var(--ink);
+  background: var(--sidebar);
+  border-right: 1px solid var(--line);
   padding: 28px 18px;
   display: flex;
   flex-direction: column;
@@ -128,7 +133,7 @@ button {
   font-family: "Space Grotesk", sans-serif;
   font-weight: 600;
   font-size: 16px;
-  color: #fff;
+  color: var(--ink);
   letter-spacing: -0.01em;
 }
 
@@ -145,7 +150,7 @@ button {
   width: 100%;
   padding: 11px 14px;
   border-radius: var(--radius-sm);
-  color: rgba(255, 255, 255, 0.62);
+  color: var(--ink-soft);
   font-size: 14px;
   font-weight: 500;
   transition: background 0.15s ease, color 0.15s ease;
@@ -153,8 +158,8 @@ button {
 }
 
 .db-nav-item:hover {
-  background: rgba(255, 255, 255, 0.06);
-  color: #fff;
+  background: rgba(20, 22, 43, 0.05);
+  color: var(--ink);
 }
 
 .db-nav-item--active {
@@ -186,8 +191,9 @@ button {
   padding: 30px 32px;
   margin-bottom: 28px;
   border-radius: var(--radius-lg);
-  background: linear-gradient(120deg, #1c1e3d 0%, #2b2e63 55%, #3d3f8f 100%);
-  color: #fff;
+  background: linear-gradient(120deg, var(--hero-start) 0%, #ffffff 55%, var(--hero-end) 100%);
+  border: 1px solid var(--line);
+  color: var(--ink);
   box-shadow: var(--shadow-card);
 }
 
@@ -224,7 +230,7 @@ button {
 .db-welcome {
   font-size: 26px;
   font-weight: 600;
-  color: #fff;
+  color: var(--ink);
   letter-spacing: -0.01em;
   position: relative;
   z-index: 1;
@@ -233,7 +239,7 @@ button {
 .db-welcome-sub {
   margin: 6px 0 0;
   font-size: 14px;
-  color: rgba(255, 255, 255, 0.68);
+  color: var(--muted);
   position: relative;
   z-index: 1;
 }
@@ -269,13 +275,14 @@ button {
   gap: 10px;
   padding: 6px 14px 6px 6px;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.12);
+  background: rgba(20, 22, 43, 0.05);
+  border: 1px solid var(--line);
   cursor: pointer;
   transition: background 0.15s ease;
 }
 
 .db-profile-btn:hover {
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(20, 22, 43, 0.09);
 }
 
 .db-profile-avatar {
@@ -299,7 +306,7 @@ button {
 .db-profile-name {
   font-size: 13px;
   font-weight: 600;
-  color: #fff;
+  color: var(--ink);
 }
 
 /* ---- Stat cards ---- */

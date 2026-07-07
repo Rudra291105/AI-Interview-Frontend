@@ -1,3 +1,20 @@
+:root {
+  --bg:           #EAEDF7;/*page bg - soft periwinkle mist, not white*/
+  --bg-alt:       #DEE2F3;/*second gradient stop*/
+  --card:         rgba(255, 255, 255, 0.72);/*frosted card over the tinted bg*/
+  --border:       #DBDFF0;
+  --accent:       #5B5BD6;
+  --accent-glow:  #4645B0;
+  --accent-soft:  rgba(91, 91, 214, 0.10);
+  --ink:          #14172E;
+  --text:         #2A2E4A;
+  --muted:        #6B7290;
+  --white:        #ffffff;
+
+  --shadow-card:  0 20px 50px rgba(43, 52, 97, 0.14);
+  --shadow-glow:  0 10px 26px rgba(91, 91, 214, 0.35);
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -12,35 +29,37 @@
   align-items: center;
   background: linear-gradient(
     135deg,
-    #111827,
-    #1f2937,
-    #374151
+    var(--bg),
+    var(--bg-alt),
+    #EAEDF7
   );
-  font-family: Arial, sans-serif;
+  font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
 }
 
 /* Card */
 .auth-card {
   width: 400px;
-  background: rgba(255,255,255,0.08);
-  backdrop-filter: blur(10px);
+  background: var(--card);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   border-radius: 20px;
   padding: 35px;
   text-align: center;
-  border: 1px solid rgba(255,255,255,0.1);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-card);
 }
 
 /* Logo */
 .logo {
   font-size: 28px;
   font-weight: bold;
-  color: white;
+  color: var(--ink);
   margin-bottom: 10px;
 }
 
 /* Subtitle */
 .subtitle {
-  color: #d1d5db;
+  color: var(--muted);
   margin-bottom: 25px;
 }
 
@@ -56,15 +75,26 @@ input {
   padding: 14px;
   margin-bottom: 15px;
   border-radius: 10px;
-  border: none;
+  border: 1px solid var(--border);
   outline: none;
-  background: rgba(255,255,255,0.1);
-  color: white;
+  background: rgba(255, 255, 255, 0.6);
+  color: var(--ink);
   font-size: 15px;
+  transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
 }
 
 input::placeholder {
-  color: #d1d5db;
+  color: var(--muted);
+}
+
+input:hover {
+  background: rgba(255, 255, 255, 0.85);
+}
+
+input:focus {
+  border-color: var(--accent);
+  background: var(--white);
+  box-shadow: 0 0 0 4px var(--accent-soft);
 }
 
 /* Button */
@@ -73,27 +103,29 @@ button {
   padding: 14px;
   border: none;
   border-radius: 10px;
-  background: white;
+  background: linear-gradient(135deg, var(--accent), var(--accent-glow));
   color: black;
   font-size: 16px;
   font-weight: bold;
   cursor: pointer;
   margin-top: 10px;
-  transition: 0.3s;
+  box-shadow: var(--shadow-glow);
+  transition: transform 0.15s, box-shadow 0.15s;
 }
 
 button:hover {
   transform: translateY(-2px);
+  box-shadow: 0 12px 30px rgba(91, 91, 214, 0.45);
 }
 
 /* Links */
 .link-text {
   margin-top: 20px;
-  color: #d1d5db;
+  color: var(--muted);
 }
 
 .link-text a {
-  color: white;
+  color: var(--accent);
   text-decoration: none;
   font-weight: bold;
 }
@@ -103,15 +135,17 @@ button:hover {
 }
 
 .forgot-link {
+  display: block;
   text-align: right;
   text-decoration: none;
-  color: #d1d5db;
+  color: var(--muted);
   margin-bottom: 15px;
   font-size: 14px;
+  transition: color 0.2s;
 }
 
 .forgot-link:hover {
-  color: white;
+  color: var(--accent);
 }
 
 /* Responsive */
@@ -139,11 +173,11 @@ button:hover {
 .card-divider-line {
   flex: 1;
   height: 1px;
-  background: rgba(255, 255, 255, 0.15);
+  background: var(--border);
 }
 
 .card-divider-text {
-  color: rgba(255, 255, 255, 0.6);
+  color: var(--muted);
   font-size: 13px;
   white-space: nowrap;
 }

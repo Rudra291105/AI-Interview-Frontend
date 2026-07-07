@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api, { clearTokens } from "../utils/api";
+import Sidebar from "./Sidebar";
+import "./Layout.css";
 import "./dashboard.css";
 
 function Dashboard() {
@@ -16,7 +18,6 @@ function Dashboard() {
   const [showProfile, setShowProfile] = useState(false);
   const [resume, setResume]           = useState(null);
   const [loadingData, setLoadingData] = useState(true);
-  const [activeTab, setActiveTab]     = useState("overview");
 
   // ── Edit profile state ──
   const [isEditing, setIsEditing]     = useState(false);
@@ -26,7 +27,7 @@ function Dashboard() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    Promise.all([api.get("/dashboard"), api.get("/profile")])//both api can run ||
+    Promise.all([api.get("/dashboard"), api.get("/profile")])
       .then(([dashRes, profileRes]) => {
         setStats(dashRes.data);
         setProfile(profileRes.data);
@@ -47,7 +48,7 @@ function Dashboard() {
 
   const uploadResume = async () => {
     if (!resume) { alert("Please select a resume first"); return; }
-    const formData = new FormData();//used to send file to backend
+    const formData = new FormData();
     formData.append("file", resume);
     try {
       const res = await api.post("/upload-resume", formData);
@@ -98,9 +99,12 @@ function Dashboard() {
 
   if (loadingData) {
     return (
-      <div className="db-loading">
-        <div className="db-spinner" />
-        <p>Loading your dashboard...</p>
+      <div className="app-layout">
+        <Sidebar />
+        <div className="app-content db-loading">
+          <div className="db-spinner" />
+          <p>Loading your dashboard...</p>
+        </div>
       </div>
     );
   }
@@ -124,84 +128,50 @@ function Dashboard() {
   ];
 
   return (
-    <div className="db-root">
+    <div className="app-layout">
 
-      {/* ── SIDEBAR ── */}
-      <aside className="db-sidebar">
-        <div className="db-sidebar-logo">
-          <div className="db-logo-mark">AI</div>
-          <span className="db-logo-name">CrackIt.AI</span>
-        </div>
-
-        <nav className="db-sidebar-nav">
-          {[
-            { id: "overview",  icon: "🏠", label: "Overview",path: "/dashboard",  },
-            { id: "history",   icon: "📋", label: "History" ,path: "/history",  },
-            { id: "progress",  icon: "📈", label: "Progress",path: "/progress",  },
-          ].map((item) => (
-            <button
-              key={item.id}
-              className={`db-nav-item ${activeTab === item.id ? "db-nav-item--active" : ""}`}
-              onClick={() => {
-    setActiveTab(item.id);
-    navigate(item.path);
-}}>
-              <span className="db-nav-icon">{item.icon}</span>
-              {item.label}
-            </button>
-            
-          ))}
-           <button
-    className="db-nav-item"
-    onClick={() => navigate("/admin_portal")}
-  >
-     <span className="db-nav-icon">🛡️</span>
-  Admin Panel
-  </button>
-        </nav>
-
-        
-      </aside>
+      {/* ── SIDEBAR (shared) ── */}
+      <Sidebar />
 
       {/* ── MAIN CONTENT ── */}
-      <main className="db-main">
+      <main className="app-content db-main">
 
         {/* Top bar */}
         <header className="db-topbar">
-  <div>
-    <h1 className="db-welcome">Hey {profile.name || "there"} 👋</h1>
-    <p className="db-welcome-sub">
-      Ready to practice today?
-    </p>
-  </div>
+          <div>
+            <h1 className="db-welcome">Hey {profile.name || "there"} 👋</h1>
+            <p className="db-welcome-sub">
+              Ready to practice today?
+            </p>
+          </div>
 
-  <div className="db-topbar-right">
+          <div className="db-topbar-right">
 
-    <button
-      className="db-start-btn"
-      onClick={() => setShowOptions(true)}
-    >
-      + Start Interview
-    </button>
+            <button
+              className="db-start-btn"
+              onClick={() => setShowOptions(true)}
+            >
+              + Start Interview
+            </button>
 
-    <div
-      className="db-profile-btn"
-      onClick={() => setShowProfile(true)}
-    >
-      <div className="db-profile-avatar">
-        {profile.name?.charAt(0).toUpperCase()}
-      </div>
+            <div
+              className="db-profile-btn"
+              onClick={() => setShowProfile(true)}
+            >
+              <div className="db-profile-avatar">
+                {profile.name?.charAt(0).toUpperCase()}
+              </div>
 
-      <div className="db-profile-info">
-        <span className="db-profile-name">
-          {profile.name}
-        </span>
+              <div className="db-profile-info">
+                <span className="db-profile-name">
+                  {profile.name}
+                </span>
 
-      </div>
-    </div>
+              </div>
+            </div>
 
-  </div>
-</header>
+          </div>
+        </header>
 
         {/* Stat cards */}
         <div className="db-stats-grid">
